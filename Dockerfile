@@ -21,14 +21,17 @@ RUN chmod +x /usr/lib/cgi-bin/basedatos.pl
 # Copia el archivo de configuración de Apache
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# Configuración de MariaDB: crear usuario y contraseña
-RUN service mysql start && \
-    mysql -e "CREATE USER 'renato'@'localhost' IDENTIFIED BY 'ponce';" && \
-    mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'renato'@'localhost' WITH GRANT OPTION;" && \
-    mysql -e "FLUSH PRIVILEGES;"
+# Configura MariaDB manualmente
+RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld && \
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql && \
+    mysqld_safe --skip-networking & \
+    sleep 10 && \
+    mysql -uroot -e "CREATE USER 'renato'@'%' IDENTIFIED BY 'ponce';" && \
+    mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'renato'@'%' WITH GRANT OPTION;" && \
+    mysqladmin shutdown
 
 # Exponer el puerto 80
 EXPOSE 80
 
 # Comando para iniciar MariaDB y Apache
-CMD ["sh", "-c", "service mysql start && apache2ctl -D FOREGROUND"]
+CMD ["sh", "-c", "mysqld_safe & apache2ctl -D FOREGROUND"]
