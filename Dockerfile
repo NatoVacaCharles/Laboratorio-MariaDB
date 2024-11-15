@@ -24,5 +24,9 @@ COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 # Exponer el puerto 80
 EXPOSE 80
 
-# Comando para iniciar Apache y MariaDB
-CMD service mysql start && apache2ctl -D FOREGROUND
+# Script de inicio para MariaDB y Apache
+COPY start-services.sh /usr/local/bin/start-services.sh
+RUN chmod +x /usr/local/bin/start-services.sh
+
+# Usar el script en CMD con formato JSON
+CMD ["/usr/local/bin/start-services.sh"]
