@@ -1,12 +1,43 @@
+* {
+    font-family:Arial, Helvetica, sans-serif ;
+}
+
+/*Le damos el diseño a todo el documento*/
 body {
     margin: 0;
     background-color:rgba(7, 121, 32, 0.597);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
+/*Hacemos que este todo en el centro*/
+main {
+    text-align: center;
+    align-items: center;
+}
+/*Configuramos el link para volver*/
+a {
+    font-weight: 750;
+    color:black;
+    text-decoration: none;
+}
+
+/*Configuramos las tablas para los pl*/
+table {
+    margin: auto;
+    margin-bottom: 10px;
+    border-collapse: collapse;
+    text-align: center;
+    border: 4px solid rgba(9, 59, 20, 0.597);
+}
+th,td {
+    padding-block: 5px;
+    padding-inline: 10px;
+    border: 4px solid rgba(9, 59, 20, 0.597);
+}
+
+/*Configuramos la navegación*/
 nav {
     background-color: rgba(9, 59, 20, 0.597);
     display: flex;
@@ -14,19 +45,43 @@ nav {
     gap: 50px;
     padding-block: 30px;
 }
-.nav-link {
-    font-weight: 750;
-    color:black;
-    text-decoration: none;
-    
-}
 .nav-link:hover{
     transform: scale(1.1);
 }
 
+/*Hacemos el formulario principal*/
+.formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    margin-top: 50px;
+    width: 50%;
+    padding: 20px;
+    box-shadow: 7px 13px 37px #000;
+    font-size: 25px;
+}
+.formulario input {
+    width: 50%;
+    border-radius: 10px;
+    padding: 5px;
+    margin-block: 10px;
+    text-align: center;
+}
+.formulario button {
+    border-radius: 8px;
+    background-color: rgba(9, 59, 20, 0.597);
+    font-weight: 750;
+    cursor: pointer;
+    width: 10%;
+}
+.formulario button:hover {
+    transform: scale(1.1);
+}
+
+/*Configuramos el footer*/
 footer {
     background-color: rgba(9, 59, 20, 0.597);
-    font-family: Arial, Helvetica, sans-serif;
     margin-top: auto;
     text-align: center;
     font-weight: 750;
