@@ -28,18 +28,9 @@ if ($dbh) {
 }
 
 # Consulta del ejercicio
-my $query = "SELECT * FROM actores WHERE actor_id=5";
+my $query = "SELECT * FROM actores WHERE actor_id>=8";
 my $sth = $dbh->prepare($query);
 $sth->execute();
-
-# Imprimir resultados de la consulta
-while (my @row = $sth->fetchrow_array) {
-    print join(", ", @row), "\n";
-}
-
-# Insertar un registro
-my $sth = $dbh->prepare("INSERT INTO Actor( Name) VALUES (?)");
-$sth->execute("Jhonny Deep");
 
 # Cerrar la conexión
 $sth->finish();
@@ -70,9 +61,8 @@ print<<'HTML'
         <h3>Actores con ID mayor e igual a 8</h3>
         <table>
             <thead>
-                <th>Gaaa</th>
-                <th>Gaaa</th>
-                <th>Gaaa</th>
+                <th>ID</th>
+                <th>NOMBRE</th>
             </thead>
             <tr>
                 <td>xd</td>

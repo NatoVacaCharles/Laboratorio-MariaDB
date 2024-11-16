@@ -28,18 +28,9 @@ if ($dbh) {
 }
 
 # Consulta del ejercicio
-my $query = "SELECT * FROM actores WHERE actor_id=5";
+my $query = "SELECT * FROM peliculas WHERE score>7 and votes>5000";
 my $sth = $dbh->prepare($query);
 $sth->execute();
-
-# Imprimir resultados de la consulta
-while (my @row = $sth->fetchrow_array) {
-    print join(", ", @row), "\n";
-}
-
-# Insertar un registro
-my $sth = $dbh->prepare("INSERT INTO Actor( Name) VALUES (?)");
-$sth->execute("Jhonny Deep");
 
 # Cerrar la conexión
 $sth->finish();
@@ -70,9 +61,11 @@ print<<'HTML'
         <h3>Películas con puntaje mayor a 7 y más de 5000 votos </h3>
         <table>
             <thead>
-                <th>Gaaa</th>
-                <th>Gaaa</th>
-                <th>Gaaa</th>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>AÑO</th>
+                <th>VOTOS</th>
+                <th>SCORE</th>
             </thead>
             <tr>
                 <td>xd</td>
