@@ -1,3 +1,4 @@
+# Usamos la última versión de debian
 FROM debian:latest
 
 # Instala Apache, Perl, MariaDB, Vim y módulos necesarios
