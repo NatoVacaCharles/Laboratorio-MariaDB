@@ -7,7 +7,7 @@ use DBI;
 # Configuración de conexión con la base de datos
 my $database = "prueba";
 my $hostname = "mariadbc"; #nombre del contenedor
-my $port     = 3307;
+my $port     = 3306;
 my $user     = "renato";
 my $password = "ponce";
 
