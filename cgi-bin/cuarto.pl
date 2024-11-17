@@ -4,6 +4,11 @@ use warnings;
 use CGI;
 use DBI;
 
+# Ejecutamos la página html
+my $q=CGI->new;
+my $year=$q->param('year');
+print $q->header('text-html; charset=UTF-8');
+
 # Configuración de conexión con la base de datos
 my $database = "prueba";
 my $hostname = "mariadbc"; #nombre del contenedor
@@ -20,10 +25,6 @@ my $dbh = DBI->connect($dsn, $user, $password, {
     PrintError       => 0,
     mysql_enable_utf8 => 1,
 });
-
-# Ejecutamos la página html
-my $q=CGI->new;
-my $year=$q->param('year');
 
 # Consulta del ejercicio
 my $query = "SELECT * FROM peliculas WHERE year= ?";
@@ -44,8 +45,7 @@ while (my @fila = $sth->fetchrow_array) {
 $sth->finish();
 $dbh->disconnect();
 
-print $q->header('text-html; charset=UTF-8');
-print<<'HTML'
+print<<'HTML';
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +78,7 @@ HTML
 
 print $resultados;
 
-print<<'HTML'
+print<<'HTML';
             </tbody>
         </table>
         <a class="nav-link" href="index.html">Volver</a>

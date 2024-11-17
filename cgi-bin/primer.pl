@@ -4,6 +4,10 @@ use warnings;
 use CGI;
 use DBI;
 
+# Creamos el cgi
+my $q=CGI->new;
+print $q->header('text-html; charset=UTF-8');
+
 # Configuración de conexión con la base de datos
 my $database = "prueba";
 my $hostname = "mariadbc"; #nombre del contenedor
@@ -46,9 +50,7 @@ $sth->finish();
 $dbh->disconnect();
 
 # Ejecutamos la página HTML
-my $q = CGI->new;
-print $q->header('text-html; charset=UTF-8');
-print <<'HTML'
+print <<'HTML';
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +80,7 @@ HTML
 
 print $resultados;
 
-print <<'HTML'
+print <<'HTML';
             </tbody>
         </table>
         <a class="nav-link" href="index.html">Volver</a>

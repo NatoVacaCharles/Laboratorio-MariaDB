@@ -19,23 +19,16 @@ RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld && \
     mysqladmin shutdown
 
 # Configura CGI y copia los scripts Perl
-RUN mkdir -p /usr/lib/cgi-bin && \
-    chown -R www-data:www-data /usr/lib/cgi-bin && \
-    chmod +x /usr/lib/cgi-bin
 COPY cgi-bin/ /usr/lib/cgi-bin/
 RUN chmod +x /usr/lib/cgi-bin/*.pl
 
 # Copia todos los archivos del proyecto al directorio de Apache
+COPY index.html /var/www/html/
 COPY . /var/www/html/
-
-# Ajusta permisos para los archivos copiados
 RUN chmod -R 755 /var/www/html
 
 # Copia el archivo de configuración de Apache
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
-
-# Elimina la página predeterminada de Apache si existiera
-RUN rm -f /var/www/html/index.html
 
 # Exponer el puerto 80
 EXPOSE 80
