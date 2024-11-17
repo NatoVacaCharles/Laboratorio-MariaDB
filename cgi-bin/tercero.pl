@@ -21,16 +21,20 @@ my $dbh = DBI->connect($dsn, $user, $password, {
     mysql_enable_utf8 => 1,
 });
 
-if ($dbh) {
-    print "Conexión exitosa a la base de datos '$database'.\n";
-} else {
-    die "Error al conectar a la base de datos: $DBI::errstr\n";
-}
-
 # Consulta del ejercicio
 my $query = "SELECT * FROM peliculas WHERE score>7 and votes>5000";
 my $sth = $dbh->prepare($query);
 $sth->execute();
+
+# Ponemos los resultados en una variable para luego imprimirlos
+my $resultados="";
+while (my @fila = $sth->fetchrow_array) {
+    $resultados.="<tr>\n";
+    foreach my $dato(@fila){
+        $resultados.="<td>$dato</td>\n";
+    }
+    $resultados.="<tr>\n";
+}
 
 # Cerrar la conexión
 $sth->finish();
@@ -52,9 +56,9 @@ print<<'HTML'
 <body>
     <header>
         <nav class="navegacion">
-            <a href="/cgi-bin/primer.pl" class="nav-link">Actor de ID 5</a>
-            <a href="/cgi-bin/segundo.pl" class="nav-link">Actores con ID>=8</a>
-            <a href="/cgi-bin/tercero.pl" class="nav-link">Películas con puntaje mayor a 7 y más de 5000 votos</a>
+            <a href="./cgi-bin/primer.pl" class="nav-link">Actor de ID 5</a>
+            <a href="./cgi-bin/segundo.pl" class="nav-link">Actores con ID>=8</a>
+            <a href="./cgi-bin/tercero.pl" class="nav-link">Películas con puntaje mayor a 7 y más de 5000 votos</a>
         </nav>
     </header>
     <main>
@@ -67,11 +71,13 @@ print<<'HTML'
                 <th>VOTOS</th>
                 <th>SCORE</th>
             </thead>
-            <tr>
-                <td>xd</td>
-                <td>xd</td>
-                <td>xd</td>
-            </tr>
+            <tbody>
+HTML
+
+print $resultados;
+
+print<<'HTML'
+            </tbody>
         </table>
         <a class="nav-link" href="index.html">Volver</a>
     </main>

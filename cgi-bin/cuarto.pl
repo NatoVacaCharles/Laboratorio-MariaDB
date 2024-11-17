@@ -21,24 +21,28 @@ my $dbh = DBI->connect($dsn, $user, $password, {
     mysql_enable_utf8 => 1,
 });
 
-if ($dbh) {
-    print "";
-} else {
-    die "Error al conectar a la base de datos: $DBI::errstr\n";
-}
+# Ejecutamos la página html
+my $q=CGI->new;
+my $year=$q->param('year');
 
 # Consulta del ejercicio
-my $query = "SELECT * FROM actores WHERE actor_id=5";
+my $query = "SELECT * FROM peliculas WHERE year=$year";
 my $sth = $dbh->prepare($query);
 $sth->execute();
+
+# Ponemos los resultados en una variable para luego imprimirlos
+my $resultados="";
+while (my @fila = $sth->fetchrow_array) {
+    $resultados.="<tr>\n";
+    foreach my $dato(@fila){
+        $resultados.="<td>$dato</td>\n";
+    }
+    $resultados.="<tr>\n";
+}
 
 # Cerrar la conexión
 $sth->finish();
 $dbh->disconnect();
-
-# Ejecutamos la página html
-my $q=CGI->new;
-my $year=$q->param('year');
 
 print $q->header('text-html; charset=UTF-8');
 print<<'HTML'
@@ -54,9 +58,9 @@ print<<'HTML'
 <body>
     <header>
         <nav class="navegacion">
-            <a href="/cgi-bin/primer.pl" class="nav-link">Actor de ID 5</a>
-            <a href="/cgi-bin/segundo.pl" class="nav-link">Actores con ID>=8</a>
-            <a href="/cgi-bin/tercero.pl" class="nav-link">Películas con puntaje mayor a 7 y más de 5000 votos</a>
+            <a href="./cgi-bin/primer.pl" class="nav-link">Actor de ID 5</a>
+            <a href="./cgi-bin/segundo.pl" class="nav-link">Actores con ID>=8</a>
+            <a href="./cgi-bin/tercero.pl" class="nav-link">Películas con puntaje mayor a 7 y más de 5000 votos</a>
         </nav>
     </header>
     <main>
@@ -69,11 +73,13 @@ print<<'HTML'
                 <th>VOTOS</th>
                 <th>SCORE</th>
             </thead>
-            <tr>
-                <td>xd</td>
-                <td>xd</td>
-                <td>xd</td>
-            </tr>
+            <tbody>
+HTML
+
+print $resultados;
+
+print<<'HTML'
+            </tbody>
         </table>
         <a class="nav-link" href="index.html">Volver</a>
     </main>
