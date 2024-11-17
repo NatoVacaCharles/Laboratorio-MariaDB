@@ -35,7 +35,7 @@ while (my @fila = $sth->fetchrow_array) {
     foreach my $dato(@fila){
         $resultados.="<td>$dato</td>\n";
     }
-    $resultados.="<tr>\n";
+    $resultados.="</tr>\n";
 }
 
 # Cerrar la conexión

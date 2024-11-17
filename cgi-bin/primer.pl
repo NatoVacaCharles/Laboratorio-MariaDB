@@ -21,36 +21,34 @@ my $dbh = DBI->connect($dsn, $user, $password, {
     mysql_enable_utf8 => 1,
 });
 
-if ($dbh) {
-    print "";
-} else {
+if (!$dbh) {
     die "<h1>Error al conectar a la base de datos: $DBI::errstr</h1>";
 }
 
 # Consulta del ejercicio
-my $id=5;
+my $id = 5;
 my $query = "SELECT * FROM actores WHERE actor_id = ?";
 my $sth = $dbh->prepare($query);
 $sth->execute($id);
 
 # Ponemos los resultados en una variable para luego imprimirlos
-my $resultados="";
+my $resultados = "";
 while (my @fila = $sth->fetchrow_array) {
-    $resultados.="<tr>\n";
-    foreach my $dato(@fila){
-        $resultados.="<td>$dato</td>\n";
+    $resultados .= "<tr>\n";
+    foreach my $dato (@fila) {
+        $resultados .= "<td>$dato</td>\n";
     }
-    $resultados.="<tr>\n";
+    $resultados .= "</tr>\n";
 }
 
 # Cerrar la conexión
 $sth->finish();
 $dbh->disconnect();
 
-# Ejecutamos la página html
-my $q=CGI->new;
+# Ejecutamos la página HTML
+my $q = CGI->new;
 print $q->header('text-html; charset=UTF-8');
-print<<'HTML'
+print <<'HTML'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,7 +78,7 @@ HTML
 
 print $resultados;
 
-print<<'HTML'
+print <<'HTML'
             </tbody>
         </table>
         <a class="nav-link" href="index.html">Volver</a>
