@@ -26,9 +26,9 @@ my $q=CGI->new;
 my $year=$q->param('year');
 
 # Consulta del ejercicio
-my $query = "SELECT * FROM peliculas WHERE year=$year";
+my $query = "SELECT * FROM peliculas WHERE year= ?";
 my $sth = $dbh->prepare($query);
-$sth->execute();
+$sth->execute($year);
 
 # Ponemos los resultados en una variable para luego imprimirlos
 my $resultados="";

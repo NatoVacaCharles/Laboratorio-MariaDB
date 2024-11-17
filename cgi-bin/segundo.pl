@@ -22,9 +22,10 @@ my $dbh = DBI->connect($dsn, $user, $password, {
 });
 
 # Consulta del ejercicio
-my $query = "SELECT * FROM actores WHERE actor_id>=8";
+my $id=8;
+my $query = "SELECT * FROM actores WHERE actor_id >= ?";
 my $sth = $dbh->prepare($query);
-$sth->execute();
+$sth->execute($id);
 
 # Ponemos los resultados en una variable para luego imprimirlos
 my $resultados="";

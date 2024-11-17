@@ -22,9 +22,11 @@ my $dbh = DBI->connect($dsn, $user, $password, {
 });
 
 # Consulta del ejercicio
-my $query = "SELECT * FROM peliculas WHERE score>7 and votes>5000";
+my $score=7;
+my $votes=5000;
+my $query = "SELECT * FROM peliculas WHERE score > ? and votes > ?";
 my $sth = $dbh->prepare($query);
-$sth->execute();
+$sth->execute($score,$votes);
 
 # Ponemos los resultados en una variable para luego imprimirlos
 my $resultados="";

@@ -28,9 +28,10 @@ if ($dbh) {
 }
 
 # Consulta del ejercicio
-my $query = "SELECT * FROM actores WHERE actor_id=5";
+my $id=5;
+my $query = "SELECT * FROM actores WHERE actor_id = ?";
 my $sth = $dbh->prepare($query);
-$sth->execute();
+$sth->execute($id);
 
 # Ponemos los resultados en una variable para luego imprimirlos
 my $resultados="";
