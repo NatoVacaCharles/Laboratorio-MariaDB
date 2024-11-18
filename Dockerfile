@@ -24,7 +24,6 @@ COPY cgi-bin/ /usr/lib/cgi-bin/
 RUN chmod +x /usr/lib/cgi-bin/*.pl
 
 # Copia todos los archivos del proyecto al directorio de Apache
-COPY index.html /var/www/html/
 COPY . /var/www/html/
 RUN chmod -R 755 /var/www/html
 

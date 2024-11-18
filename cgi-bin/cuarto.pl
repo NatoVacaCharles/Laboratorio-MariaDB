@@ -7,7 +7,7 @@ use DBI;
 # Ejecutamos la página html
 my $q=CGI->new;
 my $year=$q->param('year');
-print $q->header('text-html; charset=UTF-8');
+print $q->header('text/html; charset=UTF-8');
 
 # Configuración de conexión con la base de datos
 my $database = "prueba";
@@ -24,7 +24,7 @@ my $dbh = DBI->connect($dsn, $user, $password, {
     RaiseError       => 1,
     PrintError       => 0,
     mysql_enable_utf8 => 1,
-});
+}) or die "<h1>Error al conectar a la base de datos: $DBI::errstr</h1>";
 
 # Consulta del ejercicio
 my $query = "SELECT * FROM peliculas WHERE year= ?";
