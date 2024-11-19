@@ -1,0 +1,19 @@
+//Creamos la red a la que se conectaran ambos contenedores
+docker network create mi_red
+docker netword connect mi_red servidorc
+docker netword connect mi_red mariadbc
+
+//Comandos para ejecutar el contendor
+docker build -t servidori .
+docker run -d -p 8121:80 --name servidorc servidori
+
+//Comandos para ejecutar mariadb
+docker run -d --name mariadbc -e MARIADB_ROOT_PASSWORD=contraseña -p 3307:3306 mariadb:latest
+docker exec -it mariadbc mariadb -u root -p
+
+//Creamos el usuario que vamos a conectar con la base de datos
+CREATE USER 'renato'@'localhost' IDENTIFIED BY 'ponce';
+GRANT ALL PRIVILEGES ON prueba.* TO 'renato'@'localhost';
+FLUSH PRIVILEGES;
+
+//Creamos las tablas

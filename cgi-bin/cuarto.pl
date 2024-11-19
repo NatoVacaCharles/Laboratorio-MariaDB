@@ -12,7 +12,7 @@ print $q->header('text/html; charset=UTF-8');
 # Configuración de conexión con la base de datos
 my $database = "prueba";
 my $hostname = "mariadbc"; #nombre del contenedor
-my $port     = 3306;
+my $port     = 3307;
 my $user     = "renato";
 my $password = "ponce";
 
