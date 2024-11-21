@@ -27,7 +27,12 @@ my $dbh = DBI->connect($dsn, $user, $password, {
 }) or die "<h1>Error al conectar a la base de datos: $DBI::errstr</h1>";
 
 # Consulta del ejercicio
-my $query = "SELECT * FROM peliculas WHERE year= ?";
+my $query = "SELECT casting.casting_id, peliculas.nombre AS pelicula, actores.nombre AS actor, casting.papel 
+                         FROM casting 
+                         JOIN peliculas ON casting.pelicula_id = peliculas.pelicula_id 
+                         JOIN actores ON casting.actor_id = actores.actor_id
+                         WHERE peliculas.year = ?
+                         ORDER BY peliculas.nombre, actores.nombre";
 my $sth = $dbh->prepare($query);
 $sth->execute($year);
 
@@ -68,10 +73,9 @@ print<<'HTML';
         <table>
             <thead>
                 <th>ID</th>
-                <th>NOMBRE</th>
-                <th>AÑO</th>
-                <th>VOTOS</th>
-                <th>SCORE</th>
+                <th>PELÍCULA</th>
+                <th>ACTORES</th>
+                <th>PAPEL</th>
             </thead>
             <tbody>
 HTML
