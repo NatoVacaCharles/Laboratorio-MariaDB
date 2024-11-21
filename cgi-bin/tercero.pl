@@ -10,7 +10,7 @@ print $q->header('text/html; charset=UTF-8');
 
 # Configuración de conexión con la base de datos
 my $database = "prueba";
-my $hostname = "mariadbc"; #nombre del contenedor
+my $hostname = "mariadbc"; # nombre del contenedor
 my $port     = 3306;
 my $user     = "renato";
 my $password = "ponce";
@@ -28,7 +28,7 @@ my $dbh = DBI->connect($dsn, $user, $password, {
 # Consulta del ejercicio
 my $score=7;
 my $votes=5000;
-my $query = "SELECT * FROM peliculas WHERE score > ? and votes > ?";
+my $query = "SELECT * FROM peliculas WHERE score > ? and vote > ?";
 my $sth = $dbh->prepare($query);
 $sth->execute($score,$votes);
 

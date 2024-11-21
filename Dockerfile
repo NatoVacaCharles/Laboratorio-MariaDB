@@ -20,7 +20,10 @@ RUN chmod +x /usr/lib/cgi-bin
 
 # Copia los scripts Perl y asegura los permisos
 COPY cgi-bin/ /usr/lib/cgi-bin/
-RUN chmod +x /usr/lib/cgi-bin/*.pl
+RUN chmod +x /usr/lib/cgi-bin/primer.pl
+RUN chmod +x /usr/lib/cgi-bin/segundo.pl
+RUN chmod +x /usr/lib/cgi-bin/tercero.pl
+RUN chmod +x /usr/lib/cgi-bin/cuarto.pl
 
 # Copia todos los archivos del proyecto al directorio de Apache
 COPY . /var/www/html/
