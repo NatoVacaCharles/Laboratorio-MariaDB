@@ -59,9 +59,9 @@ print<<'HTML';
 <body>
     <header>
         <nav class="navegacion">
-            <a href="./cgi-bin/primer.pl" class="nav-link">Actor de ID 5</a>
-            <a href="./cgi-bin/segundo.pl" class="nav-link">Actores con ID>=8</a>
-            <a href="./cgi-bin/tercero.pl" class="nav-link">Películas con puntaje mayor a 7 y más de 5000 votos</a>
+            <a href="primer.pl" class="nav-link">Actor de ID 5</a>
+            <a href="segundo.pl" class="nav-link">Actores con ID>=8</a>
+            <a href="tercero.pl" class="nav-link">Películas con puntaje mayor a 7 y más de 5000 votos</a>
         </nav>
     </header>
     <main>
@@ -79,7 +79,7 @@ print $resultados;
 print<<'HTML';
             </tbody>
         </table>
-        <a class="nav-link" href="index.html">Volver</a>
+        <a class="nav-link" href="../index.html">Volver</a>
     </main>
     <footer>
         <p>Hecho por Renato Ponce. Todos los derechos reservados ©.</p>

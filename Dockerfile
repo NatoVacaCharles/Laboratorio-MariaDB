@@ -3,27 +3,26 @@ FROM debian:latest
 
 # Actualiza e instala los paquetes necesarios
 RUN apt-get update && \
-    apt-get install -y apache2 libapache2-mod-perl2 perl mariadb-server \
+    apt-get install -y apache2 libapache2-mod-perl2 perl mariadb-server dos2unix \
     libdbi-perl libdbd-mysql-perl vim && \
     apt-get clean
 
 # Habilita el módulo CGI de Apache
-RUN a2enmod cgi
+RUN a2dismod mpm_event mpm_worker cgid && \
+    a2enmod mpm_prefork cgi
+
+# Copia los scripts Perl
+RUN mkdir -p /usr/lib/cgi-bin/
+COPY cgi-bin/ /usr/lib/cgi-bin/
 
 # Crear directorio para HTML
 RUN mkdir -p /var/www/html
 RUN chmod -R 755 /var/www/html
 
-# Crea el directorio CGI y da permisos
-RUN mkdir -p /usr/lib/cgi-bin
-RUN chmod +x /usr/lib/cgi-bin
-
-# Copia los scripts Perl y asegura los permisos
-COPY cgi-bin/ /usr/lib/cgi-bin/
-RUN chmod +x /usr/lib/cgi-bin/primer.pl
-RUN chmod +x /usr/lib/cgi-bin/segundo.pl
-RUN chmod +x /usr/lib/cgi-bin/tercero.pl
-RUN chmod +x /usr/lib/cgi-bin/cuarto.pl
+# Asegurar permisos correctos para los scripts CGI
+RUN chmod 755 /usr/lib/cgi-bin/*.pl && \
+    chown -R www-data:www-data /usr/lib/cgi-bin/ && \
+    dos2unix /usr/lib/cgi-bin/*.pl
 
 # Copia todos los archivos del proyecto al directorio de Apache
 COPY . /var/www/html/
