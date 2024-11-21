@@ -1,7 +1,7 @@
 //Creamos la red a la que se conectaran ambos contenedores
 docker network create mi_red
-docker netword connect mi_red servidorc
-docker netword connect mi_red mariadbc
+docker network connect mi_red servidorc
+docker network connect mi_red mariadbc
 
 //Comandos para ejecutar el contendor
 docker build -t servidori .
@@ -13,7 +13,15 @@ docker exec -it mariadbc mariadb -u root -p
 
 //Creamos el usuario que vamos a conectar con la base de datos
 CREATE USER 'renato'@'localhost' IDENTIFIED BY 'ponce';
-GRANT ALL PRIVILEGES ON prueba.* TO 'renato'@'localhost';
+GRANT ALL PRIVILEGES ON prueba.* TO 'renato'@'%' IDENTIFIED BY 'ponce';
 FLUSH PRIVILEGES;
 
 //Creamos las tablas
+
+CREATE TABLE IF NOT EXISTS actores (actor_id INT PRIMARY KEY AUTO_INCREMENT,nombre VARCHAR(100) NOT NULL);
+CREATE TABLE IF NOT EXISTS peliculas (pelicula_id INT PRIMARY KEY AUTO_INCREMENT,nombre VARCHAR(100) NOT NULL,year INT,vote INT,score DECIMAL(3, 1));
+CREATE TABLE IF NOT EXISTS casting (casting_id INT PRIMARY KEY AUTO_INCREMENT,pelicula_id INT,actor_id INT,papel VARCHAR(100),FOREIGN KEY (pelicula_id) REFERENCES peliculas(pelicula_id) ON DELETE CASCADE,FOREIGN KEY (actor_id) REFERENCES actores(actor_id) ON DELETE CASCADE);
+
+INSERT INTO actores (nombre) VALUES ('Robert Downey Jr.'),('Scarlett Johansson'),('Chris Hemsworth'),('Chris Evans'),('Mark Ruffalo'),('Gal Gadot'),('Henry Cavill'),('Jason Momoa'),('Ezra Miller'),('Ben Affleck'),('Daniel Radcliffe'),('Emma Watson'),('Rupert Grint'),('Tom Holland'),('Zendaya'),('Brad Pitt'),('Leonardo DiCaprio'),('Angelina Jolie'),('Jennifer Lawrence'),('Tom Hanks');
+INSERT INTO peliculas (nombre, year, vote, score) VALUES ('Iron Man', 2008, 1000000, 8.5),('The Avengers', 2012, 1200000, 8.1),('Captain America: Civil War', 2016, 1100000, 7.9),('Avengers: Endgame', 2019, 1500000, 8.7),('Wonder Woman', 2017, 900000, 7.4),('Justice League', 2017, 800000, 6.1),('Aquaman', 2018, 1000000, 7.0),('Harry Potter and the Sorcerer\'s Stone', 2001, 1100000, 7.6),('Harry Potter and the Chamber of Secrets', 2002, 1000000, 7.4),('Spider-Man: Homecoming', 2017, 900000, 7.4),('Spider-Man: Far From Home', 2019, 1100000, 7.5),('Titanic', 1997, 1500000, 8.5),('Inception', 2010, 1400000, 8.8),('The Wolf of Wall Street', 2013, 1000000, 8.2),('The Hunger Games', 2012, 1100000, 7.2),('The Terminal', 2004, 600000, 7.4),('Forrest Gump', 1994, 1300000, 8.8),('Fight Club', 1999, 1400000, 8.8),('Maleficent', 2014, 800000, 7.0),('Black Panther', 2018, 1200000, 7.3);
+INSERT INTO casting (pelicula_id, actor_id, papel) VALUES (1, 1, 'Tony Stark'),(2, 1, 'Tony Stark'),(2, 2, 'Natasha Romanoff'),(2, 3, 'Thor'),(2, 4, 'Steve Rogers'),(3, 4, 'Steve Rogers'),(3, 2, 'Natasha Romanoff'),(4, 1, 'Tony Stark'),(4, 5, 'Bruce Banner'),(5, 6, 'Diana Prince'),(6, 7, 'Clark Kent'),(6, 8, 'Arthur Curry'),(6, 9, 'Barry Allen'),(6, 10, 'Bruce Wayne'),(7, 8, 'Arthur Curry'),(8, 11, 'Harry Potter'),(9, 11, 'Harry Potter'),(9, 12, 'Hermione Granger'),(9, 13, 'Ron Weasley'),(10, 14, 'Peter Parker'),(11, 14, 'Peter Parker'),(11, 15, 'MJ'),(12, 16, 'Jack Dawson'),(13, 17, 'Dom Cobb'),(14, 17, 'Jordan Belfort'),(15, 18, 'Katniss Everdeen'),(16, 19, 'Viktor Navorski'),(17, 19, 'Forrest Gump'),(18, 16, 'Tyler Durden'),(19, 18, 'Maleficent'),(20, 6, 'T\'Challa');
