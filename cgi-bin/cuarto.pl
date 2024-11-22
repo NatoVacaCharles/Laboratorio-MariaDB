@@ -2,7 +2,12 @@
 use strict;
 use warnings;
 use CGI;
+use utf8;
+use Encode;
 use DBI;
+
+# Se configura la codificación de salida
+binmode STDOUT, ":encoding(UTF-8)";
 
 # Ejecutamos la página html
 my $q=CGI->new;
@@ -69,18 +74,23 @@ print<<'HTML';
         </nav>
     </header>
     <main>
-        <h3>Peliculas del año </h3>
-        <table>
+        <h3>Peliculas del año
+HTML
+print "$year</h3>";
+
+if (!$resultados){
+    print "<h1>UPS! NO SE ENCONTRARON DATOS SOBRE EL AÑO $year</h1>"
+} else {
+    print "<table>
             <thead>
                 <th>ID</th>
                 <th>PELÍCULA</th>
                 <th>ACTORES</th>
                 <th>PAPEL</th>
             </thead>
-            <tbody>
-HTML
-
-print $resultados;
+            <tbody>";
+    print $resultados;
+}
 
 print<<'HTML';
             </tbody>
